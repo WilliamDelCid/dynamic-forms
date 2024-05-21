@@ -1,0 +1,13 @@
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.field-column {
+  margin-bottom: 16px; /* Para agregar espacio entre las filas */
+}
+
+.custom-box-class{
+  background-color: white;
+}

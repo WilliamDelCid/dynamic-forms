@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [ngClass]="boxConfig?.class" [ngStyle]="boxConfig?.style" class="container">
+  <div formArrayName="rows">
+    <ng-container *ngFor="let row of rowsArray.controls; let i = index" [formGroupName]="i">
+      <div class="row">
+        <div *ngFor="let field of fields.slice(i * columns, (i + 1) * columns)" class="col">
+          <label class="form-label">{{ field.label }}</label>
+          <input
+            *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'password'"
+            [type]="field.type"
+            [formControlName]="field.name"
+            [placeholder]="field.placeholder"
+            class="form-control"
+            [required]="field.required"
+          />
+          <div
+            *ngIf="form.get('rows')?.get(i.toString())?.get(field.name)?.invalid
+                  && (form.get('rows')?.get(i.toString())?.get(field.name)?.dirty
+                  || form.get('rows')?.get(i.toString())?.get(field.name)?.touched)"
+            class="invalid-feedback d-block">
+            <div>{{ getErrorMessage(form.get('rows')?.get(i.toString())?.get(field.name) || null, field) }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
